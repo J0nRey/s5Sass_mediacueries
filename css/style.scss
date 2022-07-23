@@ -1,0 +1,168 @@
+//crear variables
+// $nombre_variable: valor;
+
+/*medida basica*/
+$base-measure: 1rem;
+
+/*gradiente personalizado*/
+//$custom-gradient:linear-gradient(45deg, hsl(236, 72%, 79%) to hsl(237, 63%, 64%));
+$custom-gradient:linear-gradient(45deg, #a3a8f0 50%, #696FDD 100%);
+$custom-gradient-inverter:linear-gradient(315deg, #a3a8f0 50%, #696FDD 100%);
+
+/*colores base*/
+// hsl(h=matiz o tono, s=saturación, l=luminosidad)
+$very-light-grayish-blue: hsl(240, 78%, 98%);
+$light-grayish-blue: hsl(234, 14%, 74%);
+$grayish-blue: hsl(233, 13%, 49%);
+$dark-grayish-blue: hsl(232, 13%, 33%);
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: arial;
+}
+
+body{
+    background-color: $light-grayish-blue;
+}
+
+//contenedor principal
+.card-wrapper{
+    width: calc(100% - #{$base-measure * 2});
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid red;
+}
+
+//tarjetas
+
+.card{
+        background: white;
+        border-radius: $base-measure;
+        padding: $base-measure*2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #acacac;
+        box-shadow: 3px 3px 5px #ccc;
+        transform: scale(1);
+        transition: all .5s ease;
+        color: $dark-grayish-blue;
+        margin-bottom: $base-measure;
+        .name,.price{
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .price{
+            font-size: $base-measure *3;
+            font-weight: bolder;
+            display: flex;
+            align-items: center;
+            span{
+                font-size: $base-measure*1.5;
+            }
+        }
+
+        ul{
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            margin-bottom: $base-measure*2;
+            li{
+                padding: $base-measure;
+                text-align: center;
+                border-bottom: 1px solid $grayish-blue;
+                &:first-of-type{
+                    border-top: 1px solid $grayish-blue;
+                }
+            }
+        }
+
+
+        .btn{
+            padding: 1rem;
+            width: 100%;
+            border: none;
+            border-radius: $base-measure *.5;
+            background-image: $custom-gradient;
+            //que propiedad hara que?, cuanto tiempo durara?, tipo de transicion
+            transition: width .5s linear;
+            color: white;
+            text-transform: uppercase;
+            //span{text-decoration: underline;}
+            //pseudoclases= &:clase{ atributos: $variables;}
+            &:hover{
+                background-image: $custom-gradient-inverter;
+                cursor: pointer;
+                width:50%
+            }
+        }
+        &:hover{
+            color: white;
+            background-image: $custom-gradient;
+            transform: scale(1.1);
+            .btn{
+                background-image: none;
+                color: $dark-grayish-blue;
+            }
+        }
+    }
+
+
+    //media queries
+
+    /*  320px — 480px: Mobile devices.
+        481px — 768px: iPads, Tablets.
+        769px — 1024px: Small screens, laptops.
+        1025px — 1200px: Desktops, large screens.
+        1201px and more — Extra large screens, TV.*/
+
+    // vercion escritorio
+    //992px 
+    /*@media only screen and (min-width: 992px){
+        .card-wrapper{
+            display: flex;
+            justify-content: center;
+
+            width: 992px;
+        }
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 991px){
+        body{
+            background-color: red;
+        }
+    }*/
+
+    
+    //Para tablet, las card deberian aparecer en forma horizontal dentro del contenedor
+    @media only screen and (min-width: 481px){// and (max-width: 768px){
+        .card-wrapper{
+            display: flex;
+            justify-content: center;
+        }
+    }
+    //A partir de 768px, solo se vean la 1ra y la 3er card sin importar cuantos card existan
+    @media only screen and (min-width: 769px){//and (max-width: 1024px){
+
+      .card{
+            &:nth-of-type(2){//, &:nth-of-type(3){
+                display:none;
+            }
+        }
+        
+    }
+    //En desktop, el body debe tener fondo blanco
+    //En desktop, se debe de invertir el orden de las cards 
+    @media only screen and (min-width: 1025px) and (max-width: 1200px){
+        body{
+            background-color: white;
+            .card-wrapper{
+                flex-direction:row-reverse;
+            }  
+        }
+    }
+
+ 
